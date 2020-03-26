@@ -1,0 +1,15 @@
+{% extends "reviews/base.html" %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+        {% for professor in professors %}
+            <h1>{{ professor.name }}</h1>
+            <p>Education : {{ professor.education }}</p>
+            <p>Department : {{ professor.department }}</p>
+            <p>Email : {{ professor.email }}</p>
+        {% endfor %}
+    </div>
+  </div>
+</main>
+{% endblock content %}

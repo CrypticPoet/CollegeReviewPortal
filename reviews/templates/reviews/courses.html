@@ -1,0 +1,6 @@
+{% extends 'reviews/base.html' %}
+{% block content %}
+{% for course in courses %}
+    <h2>{{ course.name }}</h2>
+    <p>Course Code : {{ course.code }}</p>
+    <p>Instructors : {</p>
