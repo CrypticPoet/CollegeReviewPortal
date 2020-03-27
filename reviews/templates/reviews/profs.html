@@ -4,10 +4,11 @@
   <div class="row">
     <div class="col-md-8">
         {% for professor in professors %}
-            <h1>{{ professor.name }}</h1>
+            <h5><a href="{% url 'prof-detail' professor.id %}">{{ professor.name }}</a></h5>
             <p>Education : {{ professor.education }}</p>
             <p>Department : {{ professor.department }}</p>
             <p>Email : {{ professor.email }}</p>
+            <div
         {% endfor %}
     </div>
   </div>

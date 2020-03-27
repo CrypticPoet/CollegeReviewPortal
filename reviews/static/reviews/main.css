@@ -28,6 +28,10 @@ ul {
   font-weight: 500;
 }
 
+.review {
+    margin: 20px 0px 20px 20px;
+}
+
 .content-section {
   background: #ffffff;
   padding: 10px 20px;

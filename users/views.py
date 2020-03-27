@@ -20,7 +20,7 @@ def register(request):
         form = SignUpForm()
     return render(request, 'users/register.html', {'form': form})
 
-@login_required
+@login_required()
 def profile(request):
     return render(request, 'users/profile.html')
 # Create your views here.
