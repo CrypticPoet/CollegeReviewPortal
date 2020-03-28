@@ -16,6 +16,9 @@ Current working features:-
  4. Detailed views for both professors and courses  
  5. Reviews can be added for both the entities  
  6. Reviews can be anonymous and can only be made if the user is logged in.  
- 
+ 7. Email ids cannot be duplicated and must have the iitd.ac.in domain   
 
-    
+Features that do not work:-  
+ 1. Email verification    
+ 2. Search bar  
+ 3. Reports and respect points  
