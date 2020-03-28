@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.decorators import login_required
 
-from .forms import ReviewForm
+from .forms import ReviewForm, CourseReviewForm
 from .models import Professor, Course
 
 
@@ -40,3 +40,18 @@ class CourseListView(ListView):
 
 class CourseDetailView(DetailView):
     model = Course
+
+@login_required()
+def add_course_review(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == "POST":
+        form = CourseReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.course = course
+            review.author = request.user
+            review.save()
+            return redirect('course-detail', pk=course.pk)
+    else:
+        form = CourseReviewForm()
+    return render(request, 'reviews/add_review.html', {'form': form})

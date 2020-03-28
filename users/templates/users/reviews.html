@@ -1,0 +1,58 @@
+{% extends 'reviews/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="content-section">
+                <div class="media">
+                    <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+                    <div class="media-body">
+                        <h2 class="account-heading">{{ user.username }}</h2>
+                        <p class="text-secondary">{{ user.email }}</p>
+                        <p class="text-secondary">{{ user.first_name }} {{ user.last_name }}</p>
+                    </div>
+                </div>
+                <div class="border-top pt-1 content-section">
+                    <legend class="border-bottom mb-3">My Reviews</legend>
+                    {% for review in user.prof_review_set.all %}
+                    <div class="border-top pt-3 review">
+                        <div class="media">
+                            <img class="rounded-circle account-img" src="{{ review.author.profile.image.url }}">
+                            <div class="media-body">
+                                <div class="date">{{ review.datetime }}</div>
+                                <strong>{{ review.author }} Rated {{review.rating }}/10</strong>
+                                <p>{{ review.body }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for review in user.course_review_set.all %}
+                    <div class="border-top pt-3 review">
+                        <div class="media">
+                            <img class="rounded-circle account-img" src="{{ review.author.profile.image.url }}">
+                            <div class="media-body">
+                                <div class="date">{{ review.datetime }}</div>
+                                <strong>{{ review.author }} Rated {{review.rating }}/10</strong>
+                                <p>{{ review.body }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3>Your Sidebar</h3>
+                <p class='text-muted'>Check your recent activity
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'profile' %}">My Profile</a></li>
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'profile-reviews' %}">My Reviews</a></li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

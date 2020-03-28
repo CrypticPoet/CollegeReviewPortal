@@ -1,16 +1,22 @@
 {% extends "reviews/base.html" %}
 {% block content %}
-<main role="main" class="container">
-  <div class="row">
-    <div class="col-md-8">
-        {% for professor in professors %}
-            <h5><a href="{% url 'prof-detail' professor.id %}">{{ professor.name }}</a></h5>
-            <p>Education : {{ professor.education }}</p>
-            <p>Department : {{ professor.department }}</p>
-            <p>Email : {{ professor.email }}</p>
-            <div
-        {% endfor %}
+{% for professor in professors %}
+<div class="container-fluid">
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-1">
+      <img src="{{ professor.image.url }}" class="card-img" alt="...">
+    </div>
+    <div class="col-md-11">
+      <div class="card-body">
+        <h5><a href ="{% url 'prof-detail' professor.id %}" class="stretched-link">{{ professor.name }}</a></h5>
+          <p class="card-text">Education : {{ professor.education }}</p>
+          <p class="card-text">Department : {{ professor.department }}</p>
+          <p class="card-text">Email : {{ professor.email }}, Contact : {{ professor.contact }}</p>
+      </div>
     </div>
   </div>
-</main>
+</div>
+</div>
+{% endfor %}
 {% endblock content %}

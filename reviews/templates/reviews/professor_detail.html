@@ -1,9 +1,20 @@
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div class="container">
-    <div class="content-section">
-        <h3 class="mr-3">{{ object.name }}</h3>
-        <small class="text-muted">{{ object.position }}</small>
+<div class="row container-fluid content-section">
+    <div class="col-md-2">
+        <img src="{{ object.image.url }}" class="card-img">
+    </div>
+    <div class="col md-10">
+        <h5 class="mr-3">{{ object.name }} ({{ object.position }})</h5>
+        <p>Education : {{ object.education }}</p>
+        <p>Department : {{ object.department }}</p>
+        <p>Courses Taught :
+            {% for course in object.course_set.all %}
+            <a href="{% url 'course-detail' course.id %}">{{course.code}},</a>
+            {% endfor %}
+        </p>
+        <p>{{ object.description }}</p>
+        <p>Email : {{ object.email }}, Contact : {{ object.contact }}</p>
     </div>
 </div>
 <div class="border-top pt-1 content-section">
@@ -17,15 +28,22 @@
     <div class="border-top pt-3 review">
         <div class="content-section">
             <div class="media">
-                <img class="rounded-circle account-img" src="{{ review.author.profile.image.url }}">
+                {% if review.anonymous %}
+                <img class="rounded-circle account-img" src="DEFAULT_IMAGE">
                 <div class="media-body">
                     <div class="date">{{ review.datetime }}</div>
-                    <strong>{{ review.author }}</strong>
-                    <p>{{ review.body }}</p>
+                    <strong>Anonymous <p class="lead">Rated {{review.rating }}/10</p> </strong>
+                    {% else %}
+                    <img class="rounded-circle account-img" src="{{ review.author.profile.image.url }}">
+                    <div class="media-body">
+                        <div class="date">{{ review.datetime }}</div>
+                        <strong>{{ review.author }} Rated {{review.rating }}/10</strong>
+                        {% endif %}
+                        <p>{{ review.body }}</p>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock content %}
