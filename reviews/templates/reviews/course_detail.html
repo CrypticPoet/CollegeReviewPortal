@@ -1,14 +1,17 @@
 {% extends 'reviews/base.html' %}
 {% block content %}
 <div class="container-fluid">
-    <div class="content-section">
+    <div class="row content-section">
+    <div class="col-md-10">
         <h5 class="mr-3">{{ object.name }} ({{ object.code }})</h5>
         <p>{{ object.department }}</p>
-        <xp>Instructors :
+        <p>Instructors :
             {% for prof in course.instructor.all %}
             <a href="{% url 'prof-detail' prof.id %}">{{prof.name}}</a>,
             {% endfor %}
-        </xp>
+        </p>
+    </div>
+    <div class="col-md-2"><button class="btn btn-warning"><h3>Rating : <span class="badge badge-secondary">{{ object.overall_rating }}</span></h3></button></div>
     </div>
 </div>
 <div class="border-top pt-1 content-section">
@@ -34,9 +37,24 @@
                 {% endif %}
                         <p>{{ review.body }}</p>
                     </div>
+                        {% if review.author == user %}
+                        <div>
+                            <a href="{% url 'delete-course-review' pk=review.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="{% url 'update-course-review' pk=review.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                        </div>
+                        {% endif %}
+                        {% if user.is_authenticated and not review.author == user %}
+                        <div>
+                            <form action="{% url 'c-report' %}" method="POST">
+                                {% csrf_token %}
+                                <a href="#" class="btn btn-secondary btn-sm">{{ review.total_reports }} Report{{ review.total_reports|pluralize }}</a>
+                                <button type="submit" name="review_id" value="{{ review.id }}" class="btn btn-danger btn-sm">Report</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-{% endblock content %}
+    {% endblock content %}

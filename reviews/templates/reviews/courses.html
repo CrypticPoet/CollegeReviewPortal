@@ -3,7 +3,8 @@
 <ul class="list-group">
     {% for course in courses %}
     <li class="list-group-item mb-3">
-        <div class="container-fluid">
+        <div class="row container-fluid">
+            <div class="col-md-10">
             <h5><a href="{% url 'course-detail' course.id %}">{{ course.name }} ({{course.code}})</a></h5>
             <p>Department : {{ course.department }}</p>
             <p>Instructors :
@@ -11,6 +12,8 @@
                 <a href="{% url 'prof-detail' prof.id %}">{{prof.name}}</a>,
                 {% endfor %}
             </p>
+            </div>
+            <div class="col-md-2"><button class="btn btn-warning"><h3>Rating : <span class="badge badge-secondary">{{ course.overall_rating }}</span></h3></button></div>
         </div>
     </li>
     {% endfor %}

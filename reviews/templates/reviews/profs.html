@@ -7,7 +7,7 @@
     <div class="col-md-1">
       <img src="{{ professor.image.url }}" class="card-img" alt="...">
     </div>
-    <div class="col-md-11">
+    <div class="col-md-9">
       <div class="card-body">
         <h5><a href ="{% url 'prof-detail' professor.id %}" class="stretched-link">{{ professor.name }}</a></h5>
           <p class="card-text">Education : {{ professor.education }}</p>
@@ -15,6 +15,7 @@
           <p class="card-text">Email : {{ professor.email }}, Contact : {{ professor.contact }}</p>
       </div>
     </div>
+    <div class="pt-3 col-md-2"><button class="btn btn-warning"><h3>Rating : <span class="badge badge-secondary">{{ professor.overall_rating }}</span></h3></button></div>
   </div>
 </div>
 </div>

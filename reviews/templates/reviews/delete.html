@@ -1,0 +1,20 @@
+{% extends 'reviews/base.html' %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Delete Review</legend>
+            <h4>Are you sure you want to delete your review?</h4>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+            {% if request.resolver_match.url_name == "delete-course-review" %}
+            <a class="btn btn-outline-secondary" href="{% url 'course-detail' object.course.id %}">Cancel</a>
+            {% else %}
+            <a class="btn btn-outline-secondary" href="{% url 'prof-detail' object.prof.id %}">Cancel</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock content %}

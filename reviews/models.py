@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 
 class Professor(models.Model) :
     name = models.CharField(max_length=100)
@@ -12,6 +12,14 @@ class Professor(models.Model) :
     contact = models.CharField(max_length=20)
     image = models.ImageField(default='default_prof.jpg', upload_to='professor_pics')
 
+    def overall_rating(self):
+        sum=0
+        count=self.reviews.count()
+        for review in self.reviews.all() :
+            sum += review.rating
+        return sum/count
+    overall_rating.short_description = 'Rating'
+
     def __str__(self):
         return self.name
 
@@ -22,6 +30,17 @@ class Course(models.Model) :
     description = models.TextField(default='No Description yet')
     instructor = models.ManyToManyField(Professor)
 
+    def overall_rating(self):
+        sum=0
+        count=self.course_reviews.count()
+        if count == 0 :
+            return
+        else :
+            for review in self.course_reviews.all() :
+                sum += review.rating
+        return sum/count
+    overall_rating.short_description = 'Rating'
+
     def __str__(self):
         return self.name
 
@@ -30,9 +49,16 @@ class Prof_review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(editable=True)
     datetime = models.DateTimeField(auto_now_add=True)
-    anonymous = models.BooleanField(default=False)
-    reported = models.PositiveSmallIntegerField(default=0, name='Reports')
+    anonymous = models.BooleanField(default=False, blank=True)
+    reports = models.ManyToManyField(User, blank=True, related_name='reports')
     prof = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name='reviews')
+
+    def total_reports(self):
+        return self.reports.count()
+    total_reports.short_description = 'Reports'
+
+    def get_absolute_url(self):
+        return reverse('prof-detail', kwargs={'pk':self.prof.pk})
 
     class Meta:
         ordering = ['-datetime']
@@ -44,9 +70,16 @@ class Course_review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(editable=True)
     datetime = models.DateTimeField(auto_now_add=True)
-    anonymous = models.BooleanField(default=False)
-    reported = models.PositiveSmallIntegerField(default=0, name='Reports')
+    anonymous = models.BooleanField(default=False, blank=True)
+    creports = models.ManyToManyField(User, blank=True, related_name='creports')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_reviews')
+
+    def total_reports(self):
+        return self.creports.count()
+    total_reports.short_description = 'Reports'
+
+    def get_absolute_url(self):
+        return reverse('course-detail', kwargs={'pk':self.course.pk})
 
     class Meta:
         ordering = ['-datetime']

@@ -16,6 +16,7 @@
         <p>{{ object.description }}</p>
         <p>Email : {{ object.email }}, Contact : {{ object.contact }}</p>
     </div>
+    <div><button class="btn btn-warning"><h3>Rating : <span class="badge badge-secondary">{{ object.overall_rating }}</span></h3></button></div>
 </div>
 <div class="border-top pt-1 content-section">
     <legend class="border-bottom mb-3">Reviews</legend>
@@ -29,18 +30,32 @@
         <div class="content-section">
             <div class="media">
                 {% if review.anonymous %}
-                <img class="rounded-circle account-img" src="DEFAULT_IMAGE">
                 <div class="media-body">
                     <div class="date">{{ review.datetime }}</div>
-                    <strong>Anonymous <p class="lead">Rated {{review.rating }}/10</p> </strong>
+                    <strong>Anonymous Rated {{review.rating }}/10</strong>
                     {% else %}
                     <img class="rounded-circle account-img" src="{{ review.author.profile.image.url }}">
                     <div class="media-body">
                         <div class="date">{{ review.datetime }}</div>
-                        <strong>{{ review.author }} Rated {{review.rating }}/10</strong>
+                        <strong>{{ review.author }} Rated {{ review.rating }}/10</strong>
                         {% endif %}
                         <p>{{ review.body }}</p>
                     </div>
+                    {% if review.author == user %}
+                    <div>
+                        <a href="{% url 'delete-review' pk=review.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'update-review' pk=review.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                    </div>
+                    {% endif %}
+                    {% if user.is_authenticated and not review.author == user %}
+                    <div>
+                        <form action="{% url 'report' %}" method="POST">
+                            {% csrf_token %}
+                            <a href="#" class="btn btn-secondary btn-sm">{{ review.total_reports }} Report{{ review.total_reports|pluralize }}</a>
+                            <button type="submit" name="review_id" value="{{ review.id }}" class="btn btn-danger btn-sm">Report</button>
+                        </form>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
