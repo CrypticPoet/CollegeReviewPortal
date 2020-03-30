@@ -29,3 +29,5 @@ Username : Useri, Password : Passi@123     where i = 1, 2, 3, 4 and so on
 ## Features that do not work:-  
  1. Email verification    
  2. Search bar  
+ 
+ **The Decrypted code says 'Please Wash Hands Properly'**
