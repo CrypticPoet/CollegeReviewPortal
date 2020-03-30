@@ -12,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Professor, Course, Prof_review, Course_review
 
-
 def home(request) :
     return render(request, 'reviews/home.html')
 
@@ -20,7 +19,6 @@ class ProfessorListView(ListView):
     model = Professor
     template_name = 'reviews/profs.html'
     context_object_name = 'professors'
-
 
 class ProfessorDetailView(DetailView):
     model = Professor

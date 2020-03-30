@@ -15,8 +15,11 @@ class Professor(models.Model) :
     def overall_rating(self):
         sum=0
         count=self.reviews.count()
-        for review in self.reviews.all() :
-            sum += review.rating
+        if count == 0:
+            return
+        else :
+            for review in self.reviews.all() :
+                sum += review.rating
         return f'{(sum/count):.1f}'
     overall_rating.short_description = 'Rating'
 
