@@ -17,7 +17,7 @@ class Professor(models.Model) :
         count=self.reviews.count()
         for review in self.reviews.all() :
             sum += review.rating
-        return sum/count
+        return f'{(sum/count):.1f}'
     overall_rating.short_description = 'Rating'
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Course(models.Model) :
         else :
             for review in self.course_reviews.all() :
                 sum += review.rating
-        return sum/count
+        return f'{(sum/count):.1f}'
     overall_rating.short_description = 'Rating'
 
     def __str__(self):
