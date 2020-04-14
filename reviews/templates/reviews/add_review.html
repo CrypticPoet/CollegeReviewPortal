@@ -1,7 +1,7 @@
 {% extends 'reviews/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
+<div class="content-section container col-md-6">
     <form method="POST" class="post-form">
         {% csrf_token %}
         <fieldset class="form-group">
@@ -10,6 +10,7 @@
         </fieldset>
         <div class="form-group">
             <button class="btn btn-success" type="submit">Submit</button>
+            <a class="btn btn-secondary" type="button" href="{{ request.META.HTTP_REFERER }}">Go back</a>
         </div>
     </form>
 </div>

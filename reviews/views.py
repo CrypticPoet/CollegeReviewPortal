@@ -7,6 +7,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
+from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,6 +15,13 @@ from .models import Professor, Course, Prof_review, Course_review
 
 def home(request) :
     return render(request, 'reviews/home.html')
+
+def searchView(request) :
+    query = request.GET.get('search_query')
+    professors = Professor.objects.filter(Q(name__icontains=query) | Q(course__name__icontains=query) | Q(course__code__icontains=query))
+    courses = Course.objects.filter(Q(name__icontains=query) | Q(code__icontains=query))
+    count = professors.count() + courses.count()
+    return render(request, 'reviews/search.html', {'professors':professors, 'courses':courses, 'count':count, 'query':query})
 
 class ProfessorListView(ListView):
     model = Professor

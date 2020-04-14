@@ -15,6 +15,7 @@ Including another URLconf
 """
 
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
@@ -24,6 +25,8 @@ from users import views as users_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', users_view.register, name='Register'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        users_view.activate_account, name='activate'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('profile/', users_view.profile, name='profile'),
     path('profile/reviews/', users_view.profile_reviews, name='profile-reviews'),

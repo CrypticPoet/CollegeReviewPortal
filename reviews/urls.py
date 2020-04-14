@@ -15,6 +15,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='main-home'),
+    path('search/', views.searchView, name='search'),
     path('profs/', ProfessorListView.as_view(), name='Professors-home'),
     path('profs/<int:pk>/', ProfessorDetailView.as_view(), name='prof-detail'),
     path('profs/<int:pk>/add_review/', ReviewCreateView.as_view(), name='add-review'),

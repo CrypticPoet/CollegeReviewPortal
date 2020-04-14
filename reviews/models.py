@@ -13,8 +13,8 @@ class Professor(models.Model) :
     image = models.ImageField(default='default_prof.jpg', upload_to='professor_pics')
 
     def overall_rating(self):
-        sum=0
-        count=self.reviews.count()
+        sum = 0
+        count = self.reviews.count()
         if count == 0:
             return
         else :
@@ -48,7 +48,8 @@ class Course(models.Model) :
         return self.name
 
 class Prof_review(models.Model):
-    rating = models.PositiveSmallIntegerField(default=0)
+    rating_choices = [(x, f'{x}') for x in range(1, 11)]
+    rating = models.PositiveSmallIntegerField(default=0, choices=rating_choices)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(editable=True)
     datetime = models.DateTimeField(auto_now_add=True)
@@ -69,7 +70,8 @@ class Prof_review(models.Model):
         return f'{self.author.username} on {self.prof.name}'
 
 class Course_review(models.Model):
-    rating = models.PositiveSmallIntegerField(default=0)
+    rating_choices = [(x, f'{x}') for x in range(1, 11)]
+    rating = models.PositiveSmallIntegerField(default=0, choices=rating_choices)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(editable=True)
     datetime = models.DateTimeField(auto_now_add=True)
