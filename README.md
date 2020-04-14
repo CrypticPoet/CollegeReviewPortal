@@ -25,9 +25,7 @@ Username : Useri, Password : Passi@123     where i = 1, 2, 3, 4 and so on
  6. Reviews can be anonymous and can only be made if the user is logged in.  
  7. Email ids cannot be duplicated and must have the iitd.ac.in domain
  8. ***Reviews can be edited, deleted and reported on the fly.***
-
-## Features that do not work:-  
- 1. Email verification    
- 2. Search bar  
+ 9. Search Bar is now fully functional
+ 10. Added Email Verification
  
  **The Decrypted code says 'Please Wash Hands Properly'**
